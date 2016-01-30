@@ -3,11 +3,12 @@ class "Cat" {
 	height = 0;
 }
 
-function Cat:__init(x, y)
+function Cat:__init(x, y, player)
 	self.x = x
 	self.y = y
-	self.radius = 30;
-	self.height = 200;
+	self.radius = 30
+	self.height = 200
+        self.player = player
 end
 
 function Cat:draw(offsetx, offsety)
@@ -52,4 +53,12 @@ end
 
 function Cat:getType()
 	return "Bed"
+end
+
+function Cat:checkCollision(x, y, width, height)
+	if x >= self.x and x <= self.x + self. width and y >= self.y and y <= self.y + self.height then
+		return true
+	end
+	
+	return false
 end
