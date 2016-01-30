@@ -12,12 +12,13 @@ function Player:__init(x, y)
 	self.headSize = 15
 	self.dx = 0
 	self.dy = 0
-	self.speed = 75
+	self.speed = 125
 	self.use = false
 	self.sleep = 75
 	self.needFactor = 10
 	self.text = ""
 	self.renderTextTime = 0
+	self.eaten = 75
 end
 
 function Player:draw(offsetx, offsety)
@@ -52,11 +53,11 @@ function Player:update(dt, objects)
 				newY = self.y
 				break
 			end
-		end
-		
-		if self.use then
-			self.use = false
-			v:use(self)
+			
+			if love.keyboard.isDown("e") then
+				self.use = false
+				v:use(self)
+			end
 		end
 	end
 	
@@ -64,7 +65,8 @@ function Player:update(dt, objects)
 	self.y = newY
 	
 	self.sleep = self.sleep - dt * self.needFactor
-	if self.sleep < 0 then
+	self.eaten = self.eaten - dt * self.needFactor
+	if self.sleep < 0 or self.eaten < 0 then
 		self.dead = true
 		self.dx = 0
 		self.dy = 0
@@ -105,10 +107,6 @@ function Player:keypressed(key)
   elseif key == 'd' then
     self.dx = 1
   end
-	
-	if key == 'e' then
-		self.use = true
-	end
 end
 
 function Player:keyreleased(key)
@@ -157,4 +155,14 @@ end
 
 function Player:isDead()
 	return self.dead
+end
+
+function Player:eat(val)
+	self.eaten = clamp(self.eaten + val, 0, 100)
+	self.renderTextTime = 5
+	self.text = "Ah, what a delicious food!"
+end
+
+function Player:getEaten(val)
+	return self.eaten
 end
