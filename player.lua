@@ -14,6 +14,8 @@ function Player:__init(x, y)
 	self.dy = 0
 	self.speed = 75
 	self.use = false
+	self.sleep = 75
+	self.needFactor = 10
 end
 
 function Player:draw(offsetx, offsety)
@@ -49,12 +51,19 @@ function Player:update(dt, objects)
 		
 		if self.use then
 			self.use = false
-			v:use()
+			v:use(self)
 		end
 	end
 	
 	self.x = newX
 	self.y = newY
+	
+	self.sleep = self.sleep - dt * self.needFactor
+	if self.sleep < 0 then
+		self.dead = true
+		self.dx = 0
+		self.dy = 0
+	end
 end
 
 function Player:getSize()
@@ -126,4 +135,16 @@ function Player:keyreleased(key)
       self.dx = -1
     end
   end
+end
+
+function Player:addSleep(val)
+	self.sleep = clamp(self.sleep + val, 0, 100)
+end
+
+function Player:getSleep(val)
+	return self.sleep
+end
+
+function Player:isDead()
+	return self.dead
 end

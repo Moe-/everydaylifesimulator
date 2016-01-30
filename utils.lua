@@ -52,3 +52,11 @@ function round(num, idp)
 		return math.floor(num + 0.5)
 	end
 end
+
+function clamp(val, a, b)
+	if a <= b then
+		return math.min(b, math.max(a, val))
+	else
+		return math.min(a, math.max(b, val))
+	end
+end
