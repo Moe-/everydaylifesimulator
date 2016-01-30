@@ -41,3 +41,25 @@ end
 function Background:getType()
 	return "Background"
 end
+
+function Background:checkCollision(x, y, width, height)
+	x = x - width/2
+	y = y - height/2
+	if x <= self.distance then
+		return true;
+	elseif x + width >= self.screenWidth - self.distance then
+		return true;
+	end
+	
+	if y <= self.distance then
+		return true;
+	elseif y + height >= self.screenHeight - self.distance then
+		return true;
+	end
+	
+	return false
+end
+
+function Background:use()
+	
+end

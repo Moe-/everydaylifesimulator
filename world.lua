@@ -12,25 +12,31 @@ class "World" {
 function World:__init(width, height)
 	screenWidth = width;
 	screenHeight = height;
-	self.background = Background:new(width, height)
 	self.objects = {}
 	self.player = Player:new(400, 150)
 	
 	table.insert(self.objects, Bed:new(150, 150))
+	table.insert(self.objects, Background:new(width, height))
 end
 
 function World:update(dt)
-	self.background:update(dt)
 	for i, v in pairs(self.objects) do
 		v:update(dt)
 	end
-	self.player:update(dt)
+	self.player:update(dt, self.objects)
 end
 
 function World:draw()
-	self.background:draw(self.offsetx, self.offsety)
 	for i, v in pairs(self.objects) do
 		v:draw(self.offsetx, self.offsety)
 	end
 	self.player:draw(self.offsetx, self.offsety)
+end
+
+function World:keypressed(key)
+  self.player:keypressed(key)
+end
+
+function World:keyreleased(key)
+  self.player:keyreleased(key)
 end
