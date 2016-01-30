@@ -33,7 +33,7 @@ function World:draw()
 	self.player:draw(self.offsetx, self.offsety)
 	
 	if self.player:isDead() then
-		love.graphics.print("Looser!", 250, 250, 5, 5)
+		love.graphics.print("Looser!", 250, 250, 0, 5, 5)
 	end
 end
 

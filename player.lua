@@ -16,6 +16,8 @@ function Player:__init(x, y)
 	self.use = false
 	self.sleep = 75
 	self.needFactor = 10
+	self.text = ""
+	self.renderTextTime = 0
 end
 
 function Player:draw(offsetx, offsety)
@@ -30,6 +32,9 @@ function Player:draw(offsetx, offsety)
 	love.graphics.setColor(128, 255, 128, 255)
 	love.graphics.circle("line", self.x, self.y, self.headSize, 100)
 	
+	if self.renderTextTime > 0 then
+		love.graphics.print(self.text, self.x + 3 * self.width / 2, self.y - self.height / 2)
+	end
 end
 
 function Player:update(dt, objects)
@@ -63,7 +68,10 @@ function Player:update(dt, objects)
 		self.dead = true
 		self.dx = 0
 		self.dy = 0
+		self.renderTextTime = 0
 	end
+	
+	self.renderTextTime = self.renderTextTime - dt
 end
 
 function Player:getSize()
@@ -139,6 +147,8 @@ end
 
 function Player:addSleep(val)
 	self.sleep = clamp(self.sleep + val, 0, 100)
+	self.renderTextTime = 5
+	self.text = "Ah, this was refreshing!"
 end
 
 function Player:getSleep(val)
