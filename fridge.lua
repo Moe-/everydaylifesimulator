@@ -47,7 +47,7 @@ function Fridge:getHeight()
 end
 
 function Fridge:getType()
-	return "Bed"
+	return "Fridge"
 end
 
 function Fridge:checkCollision(x, y, width, height)

@@ -15,7 +15,7 @@ function Player:__init(x, y)
 	self.speed = 125
 	self.use = false
 	self.sleep = 75
-	self.needFactor = 10
+	self.needFactor = 5
 	self.text = ""
 	self.renderTextTime = 0
 	self.eaten = 75
