@@ -16,12 +16,15 @@ function World:__init(width, height)
 	screenHeight = height;
 	self.objects = {}
 	self.player = Player:new(400, 150)
-	
+        self.time = 0
+	self.day = 0
 	table.insert(self.objects, Bed:new(150, 150, self.player))
 	table.insert(self.objects, Bed:new(750, 150, self.player))
 	table.insert(self.objects, Fridge:new(500, 650, self.player))
-  table.insert(self.objects, Cat:new(450, 250, self.player))
+        table.insert(self.objects, Cat:new(450, 250, self.player))
 	table.insert(self.objects, Background:new(width, height))
+
+        
 end
 
 function World:update(dt)
@@ -29,6 +32,12 @@ function World:update(dt)
 		v:update(dt)
 	end
 	self.player:update(dt, self.objects)
+        if self.time < 24 * 60 then
+                self.time = self.time + 1
+        else
+                self.time = 0
+                self.day = self.day + 1
+        end
 end
 
 function World:draw()
@@ -36,6 +45,8 @@ function World:draw()
 		v:draw(self.offsetx, self.offsety)
 	end
 	self.player:draw(self.offsetx, self.offsety)
+        
+        love.graphics.print("Tag: " .. self.day ..  "  Zeit: " .. self.time , 10 , 10, 0, 1.5, 1.5)
 	
 	if self.player:isDead() then
 		love.graphics.print("Looser!", 250, 250, 0, 5, 5)
