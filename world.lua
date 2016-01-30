@@ -1,6 +1,7 @@
 require('background')
 require('bed')
 require('player')
+require('cat')
 
 class "World" {
 	screenWidth = 0;
@@ -17,6 +18,7 @@ function World:__init(width, height)
 	self.player = Player:new(400, 150)
 	
 	table.insert(self.objects, Bed:new(150, 150))
+        table.insert(self.objects, Cat:new(450, 250))
 end
 
 function World:update(dt)
