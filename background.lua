@@ -1,11 +1,13 @@
 class "Background" {
 	screenWdith = 0;
 	screenHeight = 0;
+	distance = 0;
 }
 
 function Background:__init(width, height)
 	self.screenWidth = width;
 	self.screenHeight = height;
+	self.distance = 50;
   self.image = love.graphics.newImage("gfx/background.png")
   self.image:setWrap("repeat", "repeat")
   --self.quad = love.graphics.newQuad(0, 0, self.image:getWidth(), self.image:getHeight(), self.image:getWidth(), self.image:getHeight())
@@ -15,8 +17,10 @@ function Background:__init(width, height)
 end
 
 function Background:draw(offsetx, offsety)
-	love.graphics.setBackgroundColor(200, 255, 200, 255)
-	love.graphics.draw(self.image, self.quad, 0 - offsetx % (self.width * 2), 0 - offsety % self.height, 0, 2, 2)
+	love.graphics.setBackgroundColor(0, 0, 0, 255)
+	love.graphics.setColor(255, 255, 255, 255)
+	love.graphics.rectangle("line", self.distance, self.distance, self.screenWidth - 2 * self.distance, self.screenHeight - 2 * self.distance)
+	--love.graphics.draw(self.image, self.quad, 0 - offsetx % (self.width * 2), 0 - offsety % self.height, 0, 2, 2)
 end
 
 function Background:update(dt)
